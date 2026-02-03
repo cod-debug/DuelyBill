@@ -1,7 +1,7 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 
-export default function HomeScreen() {
+export default function WelcomeScreen() {
     const router = useRouter();
 
     return(
@@ -17,15 +17,9 @@ export default function HomeScreen() {
             <View className="px-8 gap-3">
                 <Pressable 
                     className="bg-red-600 rounded-lg py-3"
-                    onPress={() => router.push('/cards')}
+                    onPress={() => router.push('/home')}
                 >
-                    <Text className="text-center text-white font-bold">View My Cards</Text>
-                </Pressable>
-                <Pressable 
-                    className="bg-gray-200 rounded-lg py-3"
-                    onPress={() => router.push('/settings')}
-                >
-                    <Text className="text-center text-gray-700 font-bold">Settings</Text>
+                    <Text className="text-center text-white font-bold">Get Started</Text>
                 </Pressable>
             </View>
         </View>

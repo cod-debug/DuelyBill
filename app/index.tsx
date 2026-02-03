@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import HomeScreen from '../components/HomeScreen';
+import WelcomeScreen from '../components/WelcomeScreen';
 
 export default function Index() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HomeScreen />
+      <WelcomeScreen />
       <StatusBar style="auto" />
     </SafeAreaView>
   );
