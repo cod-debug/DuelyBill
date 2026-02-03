@@ -3,10 +3,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home() {
   return (
-    <SafeAreaView style={{ flex: 1 }} className='gap-8 bg-red-600'>
+    <SafeAreaView style={{ flex: 1 }} className='gap-4 bg-red-600'>
       <Text className='mt-4 px-8 text-2xl font-bold text-white'>Hello, John</Text>
       <View
-        className='mt-4 flex-grow bg-white px-4 py-4'
+        className='flex-grow bg-white px-4 py-4'
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>
         <ScrollView>
             <Text className='mt-2 font-bold text-gray-600'>Payment Status Overview</Text>
