@@ -10,12 +10,12 @@ export default function Home() {
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>
         <ScrollView>
             <Text className='mt-2 font-bold text-gray-600'>Payment Status Overview</Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 23, justifyContent: 'center' }}>
-                <View className='mt-4 w-1/2 bg-green-600 rounded justify-center py-4 px-4' style={{ aspectRatio: 1 }}>
+            <View className='flex flex-row gap-4 justify-center px-8'>
+                <View className='mt-4 w-1/2 bg-yellow-500 rounded-2xl justify-center py-4 px-4'>
                     <Text className='text-white text-center'>Paid This Month:</Text>
                     <Text className='text-center font-bold text-white' style={{ fontSize: 32 }}>2</Text>
                 </View>
-                <View className='mt-4 w-1/2 bg-red-600 rounded justify-center py-4 px-4' style={{ aspectRatio: 1 }}>
+                <View className='mt-4 w-1/2 bg-red-500 rounded-2xl justify-center py-4 px-4'>
                     <Text className='text-white text-center'>Due Soon:</Text>
                     <Text className='text-center font-bold text-white' style={{ fontSize: 32 }}>1</Text>
                 </View>
