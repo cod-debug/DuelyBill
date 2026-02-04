@@ -1,10 +1,23 @@
+import { getData } from 'helpers/async-storage';
+import { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home() {
+  const [userName, setUserName] = useState('Anonymous');
+
+  useEffect(() => {
+    // Simulate fetching user data
+    getData('firstName').then(user => {
+      if (user && user) {
+        setUserName(user);
+      }
+    });
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }} className='gap-4 bg-red-600'>
-      <Text className='mt-4 px-8 text-2xl font-bold text-white'>Hello, John</Text>
+      <Text className='mt-4 px-8 text-2xl font-bold text-white'>Hello, {userName}</Text>
       <View
         className='flex-grow bg-white px-4 py-4'
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>

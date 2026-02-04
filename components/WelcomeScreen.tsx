@@ -1,9 +1,26 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
+import { getData, saveData } from "helpers/async-storage";
 
 export default function WelcomeScreen() {
     const router = useRouter();
 
+    useEffect(() => {
+        saveData('firstName', 'Roy');
+        
+        getData('hasSeenWelcome').then(value => {
+            const seen = value === true || value === 'true';
+            if(seen){
+                router.replace('/home');
+            }
+        });
+    }, [router]);
+
+    function handleGetStarted() {
+        saveData('hasSeenWelcome', 'true');
+        router.push('/home');
+    }
     return(
         <View className="flex-1 gap-2">
             <View>
@@ -17,7 +34,7 @@ export default function WelcomeScreen() {
             <View className="px-8 gap-3">
                 <Pressable 
                     className="bg-red-600 rounded-lg py-3"
-                    onPress={() => router.push('/home')}
+                    onPress={handleGetStarted}
                 >
                     <Text className="text-center text-white font-bold">Get Started</Text>
                 </Pressable>
