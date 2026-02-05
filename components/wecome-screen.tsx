@@ -2,29 +2,36 @@ import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { getData, saveData } from "helpers/async-storage";
+import { setStoredCards } from "helpers/process-cards";
 
 export default function WelcomeScreen() {
     const router = useRouter();
 
     useEffect(() => {
-        saveData('firstName', 'Roy');
-        
+        setStoredCards();
         getData('hasSeenWelcome').then(value => {
             const seen = value === true || value === 'true';
             if(seen){
-                router.replace('/home');
+                getData('isRegistered').then(registered => {
+                    const isRegistered = registered === true || registered === 'true';
+                    if(isRegistered){
+                        router.replace('/home');
+                    } else {
+                        router.replace('/register');
+                    }
+                });
             }
         });
     }, [router]);
 
     function handleGetStarted() {
         saveData('hasSeenWelcome', 'true');
-        router.push('/home');
+        router.push('/register');
     }
     return(
         <View className="flex-1 gap-2">
             <View>
-                <Text className="text-2xl font-bold text-red-600 text-center">DuelyBill Tracker</Text>
+                <Text className="text-2xl font-bold text-red-600 text-center">Welcome to DuelyBill!</Text>
                 <Text className="text-center text-red-500 text-lg">Track Your Credit Card Payments</Text>
             </View>
             <View className="flex-grow justify-center px-4">

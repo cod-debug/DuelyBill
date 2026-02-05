@@ -1,39 +1,41 @@
-import { getData } from 'helpers/async-storage';
-import { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import CardList from 'components/card-list';
+import PaymentStatusOverview from 'components/payment-status-overview';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Separator from 'components/separator';
+import UserHeader from 'components/user-header';
+import { useRouter } from 'expo-router';
 
+let paymentStatus = {
+  paidThisMonth: 0,
+  dueSoon: 0,
+};
 export default function Home() {
-  const [userName, setUserName] = useState('Anonymous');
+  const router = useRouter();
 
-  useEffect(() => {
-    // Simulate fetching user data
-    getData('firstName').then(user => {
-      if (user && user) {
-        setUserName(user);
-      }
-    });
-  }, []);
-
+  function handleRedirect(path: string) {
+    router.push(path);
+  }
+  
   return (
     <SafeAreaView style={{ flex: 1 }} className='gap-4 bg-red-600'>
-      <Text className='mt-4 px-8 text-2xl font-bold text-white'>Hello, {userName}</Text>
+      <UserHeader />
       <View
         className='flex-grow bg-white px-4 py-4'
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>
-        <ScrollView>
-            <Text className='mt-2 font-bold text-gray-600'>Payment Status Overview</Text>
-            <View className='flex flex-row gap-4 justify-center px-8'>
-                <View className='mt-4 w-1/2 bg-yellow-500 rounded-2xl justify-center py-4 px-4'>
-                    <Text className='text-white text-center'>Paid This Month:</Text>
-                    <Text className='text-center font-bold text-white' style={{ fontSize: 32 }}>2</Text>
-                </View>
-                <View className='mt-4 w-1/2 bg-red-500 rounded-2xl justify-center py-4 px-4'>
-                    <Text className='text-white text-center'>Due Soon:</Text>
-                    <Text className='text-center font-bold text-white' style={{ fontSize: 32 }}>1</Text>
-                </View>
-            </View>
-        </ScrollView>
+        <View className='flex flex-grow'>
+          <PaymentStatusOverview paidThisMonth={paymentStatus.paidThisMonth} dueSoon={paymentStatus.dueSoon} />
+
+          <Separator />
+          <ScrollView className='flex-grow'>
+            <CardList />
+          </ScrollView>
+          <Separator />
+          
+          <Pressable onPress={() => {handleRedirect('/cards-add')}} className='mt-4 items-center justify-center rounded-lg bg-red-700 p-3'>
+            <Text className='text-white'>Add Card</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );

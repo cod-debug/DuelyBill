@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import WelcomeScreen from '../components/WelcomeScreen';
+import WelcomeScreen from '../components/wecome-screen';
 
 export default function Index() {
   return (
