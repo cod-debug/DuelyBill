@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
 import { deleteCard, payCard } from "helpers/process-cards";
+import { updateNotifications } from "helpers/notification-service";
 import { Pressable, Text, View } from "react-native";
 
 type CardData = {
@@ -18,13 +19,21 @@ export default function CardItem({ data } : { data: CardData }) {
   const dueDate = new Date(year, month, day);
   const dueDateFormatted = dueDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); // something like February 2, 2026
 
-  function handleDelete() {
+  async function handleDelete() {
     deleteCard({ id: data.id });
+    
+    // Update scheduled notifications after deleting card
+    await updateNotifications();
+    
     router.push('/home');
   }
 
-  function handlePayCard(){
+  async function handlePayCard(){
     payCard({ id: data.id });
+    
+    // Update scheduled notifications after payment
+    await updateNotifications();
+    
     router.push('/home');
   }
   return (

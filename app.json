@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DuelyBill",
-    "slug": "DuelyBill",
+    "name": "duely-bill",
+    "slug": "duely-bill",
     "version": "1.0.0",
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +31,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.rduenas.duelybill"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "62a95c2d-d8b1-4c64-b8b9-95aa03248358"
       }
     }
   }

@@ -47,11 +47,12 @@ export default function Home() {
       <View
         className='flex-grow bg-white px-4 py-4'
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>
-        <View className='flex flex-grow'>
+        <View className='flex flex-1'>
           <PaymentStatusOverview paidThisMonth={paymentStatus.paidThisMonth} dueSoon={paymentStatus.dueSoon} />
 
           <Separator />
-          <ScrollView className='flex-grow'>
+          <Text className="text-lg font-bold text-gray-700">Your Cards</Text>
+          <ScrollView className='flex-1'>
             <CardList />
           </ScrollView>
           <Separator />

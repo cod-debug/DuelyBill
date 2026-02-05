@@ -2,6 +2,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { addCard } from "helpers/process-cards";
+import { updateNotifications } from "helpers/notification-service";
 
 export default function CardAddForm() {
     // create a form to add a new card
@@ -13,7 +14,7 @@ export default function CardAddForm() {
     // router
     const router = useRouter();
     
-    function handleSaveCard(){
+    async function handleSaveCard(){
         let payload = {
             id: Date.now().toString(),
             cardName: cardData.cardName,
@@ -22,6 +23,10 @@ export default function CardAddForm() {
         };
 
         addCard({ data: payload });
+        
+        // Update scheduled notifications with new card data
+        await updateNotifications();
+        
         router.push('/home');
     }
 
