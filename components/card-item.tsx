@@ -2,13 +2,7 @@ import { useRouter } from "expo-router";
 import { deleteCard, payCard } from "helpers/process-cards";
 import { updateNotifications } from "helpers/notification-service";
 import { Pressable, Text, View } from "react-native";
-
-type CardData = {
-    id: string,
-    cardName: string,
-    lastPayment: string | null,
-    dueDate: number,
-}
+import type { CardData } from "../types";
 
 export default function CardItem({ data } : { data: CardData }) {
   const router = useRouter();

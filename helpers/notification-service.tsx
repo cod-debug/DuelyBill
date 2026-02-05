@@ -2,13 +2,7 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { getData } from './async-storage';
-
-type CardData = {
-  id: string;
-  cardName: string;
-  lastPayment: string | null;
-  dueDate: number;
-};
+import type { CardData } from '../types';
 
 // Configure notification handler
 Notifications.setNotificationHandler({

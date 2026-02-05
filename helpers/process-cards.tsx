@@ -1,11 +1,5 @@
 import { getData, saveData } from "./async-storage";
-
-type CardData = {
-    id: string,
-    cardName: string,
-    lastPayment: string | null,
-    dueDate: number,
-}
+import type { CardData } from "../types";
 
 let storedCards: CardData[] = [];
 

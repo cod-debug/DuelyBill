@@ -8,13 +8,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { getPaidAndUpcomingPayments } from 'helpers/process-cards';
 import { getData } from 'helpers/async-storage';
-
-type CardData = {
-    id: string,
-    cardName: string,
-    lastPayment: string | null,
-    dueDate: number,
-}
+import type { CardData } from '../types';
 
 export default function Home() {
   const router = useRouter();
