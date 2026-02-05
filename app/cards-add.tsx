@@ -1,6 +1,6 @@
 import CardAddForm from "components/card-add-form";
 import UserHeader from "components/user-header";
-import { ScrollView, Text, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CardsAdd() {

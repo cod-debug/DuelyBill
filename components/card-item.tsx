@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import deleteCard from "helpers/process-cards";
+import { deleteCard, payCard } from "helpers/process-cards";
 import { Pressable, Text, View } from "react-native";
 
 type CardData = {
@@ -22,6 +22,11 @@ export default function CardItem({ data } : { data: CardData }) {
     deleteCard({ id: data.id });
     router.push('/home');
   }
+
+  function handlePayCard(){
+    payCard({ id: data.id });
+    router.push('/home');
+  }
   return (
     <View className="relative">
       <View className="mt-2 flex flex-row items-center gap-4 rounded-2xl border border-gray-300 bg-slate-100 p-4">
@@ -31,7 +36,7 @@ export default function CardItem({ data } : { data: CardData }) {
           <Text className="text-gray-800">Last Payment: {data.lastPayment ? new Date(data.lastPayment).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : "No payments yet"}</Text>
         </View>
         <View className="w-20">
-          <Pressable>
+          <Pressable onPress={handlePayCard}>
             <Text className="rounded-lg bg-green-700 py-2 text-center text-white">Pay</Text>
           </Pressable>
         </View>

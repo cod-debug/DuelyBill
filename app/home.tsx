@@ -5,17 +5,41 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Separator from 'components/separator';
 import UserHeader from 'components/user-header';
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { getPaidAndUpcomingPayments } from 'helpers/process-cards';
+import { getData } from 'helpers/async-storage';
 
-let paymentStatus = {
-  paidThisMonth: 0,
-  dueSoon: 0,
-};
+type CardData = {
+    id: string,
+    cardName: string,
+    lastPayment: string | null,
+    dueDate: number,
+}
+
 export default function Home() {
   const router = useRouter();
+  const [paymentStatus, setPaymentStatus] = useState({
+    paidThisMonth: 0,
+    dueSoon: 0,
+  });
 
   function handleRedirect(path: string) {
     router.push(path);
   }
+
+  useEffect(() => {
+    let cards: CardData[] = [];
+    getData('cards').then((storedCards) => {
+      if (storedCards) {
+        cards = storedCards;
+      }
+      const statusCounts = getPaidAndUpcomingPayments(cards);
+      setPaymentStatus({
+        paidThisMonth: statusCounts.paidCards,
+        dueSoon: statusCounts.upcomingCards,
+      });
+    });
+  }, []);
   
   return (
     <SafeAreaView style={{ flex: 1 }} className='gap-4 bg-red-600'>
