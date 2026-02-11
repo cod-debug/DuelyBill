@@ -7,17 +7,16 @@ type CardData = {
     dueDate: number,
 }
 
-let storedCards: CardData[] = [];
-
-export function setStoredCards():void {
-    getData('cards').then((data) => {
-        storedCards = data || [];
-    })
-}
-
-let formattedCards: CardData[] = storedCards || [];
 
 export function addCard({ data } : { data: CardData }):void {
+    let storedCards: CardData[] = [];
+
+    getData('cards').then((data) => {
+        storedCards = data || [];
+    });
+
+    let formattedCards: CardData[] = storedCards || [];
+
     formattedCards = [...formattedCards, data];
 
     saveData('cards', JSON.stringify(formattedCards)).then(() => {
@@ -26,6 +25,13 @@ export function addCard({ data } : { data: CardData }):void {
 }
 
 export function deleteCard({ id } : { id: string }):void {
+    let storedCards: CardData[] = [];
+
+    getData('cards').then((data) => {
+        storedCards = data || [];
+    });
+
+    let formattedCards: CardData[] = storedCards || [];
     formattedCards = formattedCards.filter(card => card.id !== id);
     saveData('cards', JSON.stringify(formattedCards)).then(() => {
         console.log('Card deleted and storage updated. Deleted card ID:', id);
@@ -34,6 +40,14 @@ export function deleteCard({ id } : { id: string }):void {
 
 export function payCard({ id } : { id: string }):void {
     const paymentDate = new Date().toISOString();
+
+    let storedCards: CardData[] = [];
+
+    getData('cards').then((data) => {
+        storedCards = data || [];
+    });
+
+    let formattedCards: CardData[] = storedCards || [];
 
     formattedCards = formattedCards.map(card => {
         if(card.id === id){
@@ -52,7 +66,7 @@ export function payCard({ id } : { id: string }):void {
 
 // Helper function to calculate days between two dates
 export function getDaysDifference(date1: Date, date2: Date): number {
-    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffTime = date2.getTime() - date1.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
 }
@@ -73,7 +87,15 @@ export function getPaidAndUpcomingPayments(savedCards: CardData[]): { paidCards:
         return false;
     }).length;
 
-    const upcomingCards = savedCards.length - paidCards;
+    const upcomingCards = savedCards.filter((card) => {
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+
+        const dueDate = new Date(currentYear, currentMonth, card.dueDate);
+        const dueDateDifference = getDaysDifference(currentDate, dueDate);
+        console.log(`Card ID: ${card.id}, Due Date Difference: ${dueDateDifference}`);
+        return dueDateDifference > 1;
+    }).length;
     
     return { paidCards, upcomingCards };
 }

@@ -14,6 +14,10 @@ export default function CardAddForm() {
     const router = useRouter();
     
     function handleSaveCard(){
+        if(!cardData.cardName || !cardData.dueDate){
+            alert('Please fill in all fields');
+            return;
+        }
         let payload = {
             id: Date.now().toString(),
             cardName: cardData.cardName,
@@ -29,7 +33,7 @@ export default function CardAddForm() {
         <View>
             <View className='flex flex-col gap-4 p-4'>
                 <View>
-                    <Text>Card Name</Text>
+                    <Text>Card Name <Text className="text-red-500">*</Text></Text>
                     <TextInput className="border-b border-gray-300 rounded p-2 mb-4"
                         placeholder="Enter card name"
                         value={cardData.cardName}
@@ -38,7 +42,7 @@ export default function CardAddForm() {
                 </View>
                 
                 <View>
-                    <Text>Due Date</Text>
+                    <Text>Due Date <Text className="text-red-500">*</Text></Text>
                     <TextInput className="border-b border-gray-300 rounded p-2 mb-4"
                         placeholder="Enter monthly due date"
                         inputMode="numeric"
