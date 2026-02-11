@@ -22,7 +22,7 @@ export default function CardAddForm() {
         let payload = {
             id: Date.now().toString(),
             cardName: cardData.cardName,
-            dueDate: parseInt(cardData.dueDate),
+            dueDate: Number.parseInt(cardData.dueDate),
             lastPayment: null,            
         };
 
