@@ -137,14 +137,24 @@ export async function scheduleDailyNotificationCheck() {
     console.log('No cards need notifications at this time');
     return;
   }
-
-  // Schedule notification at 10:00 AM
-  await scheduleNotificationAtTime(10, 0);
   
-  // Schedule notification at 3:00 PM (15:00)
-  await scheduleNotificationAtTime(15, 0);
+  // Schedule notification at 07:00 PM
+  await scheduleNotificationAtTime(19, 0);
 
-  console.log('Daily notifications scheduled for 10:00 AM and 3:00 PM');
+  // Schedule notification at 08:00 PM
+  await scheduleNotificationAtTime(20, 0);
+
+  // Schedule notification at 09:00 PM
+  await scheduleNotificationAtTime(21, 0);
+
+  // Schedule notification at 10:00 PM
+  await scheduleNotificationAtTime(22, 0);
+
+  // Schedule notification at 11:00 PM
+  await scheduleNotificationAtTime(23, 0);
+
+
+  console.log('Daily notifications scheduled for 07:00 PM, 08:00 PM, 09:00 PM, 10:00 PM, and 11:00 PM');
 }
 
 // Schedule daily notification at 12 AM (legacy function, kept for backward compatibility)
