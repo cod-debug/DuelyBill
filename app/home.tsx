@@ -8,13 +8,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { getPaidAndUpcomingPayments } from 'helpers/process-cards';
 import { getData } from 'helpers/async-storage';
-
-type CardData = {
-    id: string,
-    cardName: string,
-    lastPayment: string | null,
-    dueDate: number,
-}
+import type { CardData } from '../types';
 
 export default function Home() {
   const router = useRouter();
@@ -47,11 +41,12 @@ export default function Home() {
       <View
         className='flex-grow bg-white px-4 py-4'
         style={{ borderTopLeftRadius: 12, borderTopRightRadius: 12, paddingTop: 16 }}>
-        <View className='flex flex-grow'>
+        <View className='flex flex-1'>
           <PaymentStatusOverview paidThisMonth={paymentStatus.paidThisMonth} dueSoon={paymentStatus.dueSoon} />
 
           <Separator />
-          <ScrollView className='flex-grow'>
+          <Text className="text-lg font-bold text-gray-700">Your Cards</Text>
+          <ScrollView className='flex-1'>
             <CardList />
           </ScrollView>
           <Separator />

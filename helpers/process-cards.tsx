@@ -1,12 +1,31 @@
 import { getData, saveData } from "./async-storage";
+import type { CardData } from "../types";
 
-type CardData = {
-    id: string,
-    cardName: string,
-    lastPayment: string | null,
-    dueDate: number,
+const currentDate = new Date();
+const month = currentDate.getMonth();
+
+function getPaidCards(savedCards: CardData[]): CardData[] {
+    return savedCards.filter((card) => {
+        if(card.lastPayment){
+            const lastPaymentDate = new Date(card.lastPayment);
+            const lastPaymentMonth = lastPaymentDate.getMonth();
+            const daysSincePayment = getDaysDifference(currentDate, lastPaymentDate);
+            
+            // Card is considered paid if payment was this month or within last 10 days
+            return (lastPaymentMonth === month) || (daysSincePayment <= 10);
+        }
+        return false;
+    })
 }
 
+function getUpcomingDueDateCards(savedCards: CardData[]): CardData[] {
+    return savedCards.filter((card) => {
+        const dueDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), card.dueDate);
+        const daysUntilDue = getDaysDifference(currentDate, dueDate);
+
+        return daysUntilDue > 0 && daysUntilDue < 10;
+    })
+}
 
 export function addCard({ data } : { data: CardData }):void {
     let storedCards: CardData[] = [];
@@ -72,30 +91,8 @@ export function getDaysDifference(date1: Date, date2: Date): number {
 }
 
 export function getPaidAndUpcomingPayments(savedCards: CardData[]): { paidCards: number, upcomingCards: number } {
-    const currentDate = new Date();
-    const month = currentDate.getMonth();
-    
-    const paidCards = savedCards.filter((card) => {
-        if(card.lastPayment){
-            const lastPaymentDate = new Date(card.lastPayment);
-            const lastPaymentMonth = lastPaymentDate.getMonth();
-            const daysSincePayment = getDaysDifference(currentDate, lastPaymentDate);
-            
-            // Card is considered paid if payment was this month or within last 10 days
-            return (lastPaymentMonth === month) || (daysSincePayment <= 10);
-        }
-        return false;
-    }).length;
-
-    const upcomingCards = savedCards.filter((card) => {
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-
-        const dueDate = new Date(currentYear, currentMonth, card.dueDate);
-        const dueDateDifference = getDaysDifference(currentDate, dueDate);
-        console.log(`Card ID: ${card.id}, Due Date Difference: ${dueDateDifference}`);
-        return dueDateDifference > 1;
-    }).length;
+    const paidCards = getPaidCards(savedCards).length;
+    const upcomingCards = getUpcomingDueDateCards(savedCards).length;
     
     return { paidCards, upcomingCards };
 }

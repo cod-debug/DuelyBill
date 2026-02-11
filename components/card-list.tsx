@@ -16,7 +16,6 @@ export default function CardList() {
     }, []);
     return(
         <View>
-            <Text className="text-lg font-bold text-gray-700">Your Cards</Text>
             <View className="flex gap-4">
                 {
                     cards?.length === 0 && (
